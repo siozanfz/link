@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ozan — Links</title>
+<link rel="icon" type="image/x-icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   VARIABLES & THEMES
+═══════════════════════════════════════ */
+:root {
+  --accent: #6366f1;
+  --accent2: #8b5cf6;
+  --accent-glow: rgba(99,102,241,0.18);
+  --accent-soft: rgba(99,102,241,0.08);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+  --ease-out: cubic-bezier(0.16,1,0.3,1);
+  --ease-in-out: cubic-bezier(0.65,0,0.35,1);
+  --ease-spring: cubic-bezier(0.34,1.56,0.64,1);
+  --transition-fast: 0.18s;
+  --transition-med: 0.3s;
+}
+[data-theme="dark"] {
+  --bg: #07080d;
+  --bg2: #0d0e16;
+  --bg3: #13151f;
+  --surface: rgba(255,255,255,0.04);
+  --surface2: rgba(255,255,255,0.08);
+  --surface3: rgba(255,255,255,0.12);
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.11);
+  --border3: rgba(255,255,255,0.18);
+  --text: #f0f2ff;
+  --text2: #b8bcd8;
+  --muted: #565b72;
+  --muted2: #3d4055;
+  --nav-bg: rgba(7,8,13,0.88);
+  --overlay: rgba(0,0,0,0.72);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md: 0 8px 32px rgba(0,0,0,0.45);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.55);
+}
+[data-theme="light"] {
+  --bg: #f0f1f8;
+  --bg2: #ffffff;
+  --bg3: #e8eaf4;
+  --surface: rgba(0,0,0,0.04);
+  --surface2: rgba(0,0,0,0.07);
+  --surface3: rgba(0,0,0,0.11);
+  --border: rgba(0,0,0,0.07);
+  --border2: rgba(0,0,0,0.12);
+  --border3: rgba(0,0,0,0.18);
+  --text: #0f1022;
+  --text2: #3d4163;
+  --muted: #8a90a8;
+  --muted2: #c0c5d8;
+  --nav-bg: rgba(240,241,248,0.9);
+  --overlay: rgba(0,0,0,0.45);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.18);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow: hidden;
+  transition: background 0.5s ease, color 0.5s ease;
+  touch-action: pan-y;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; border: none; outline: none; background: none; }
+
+/* Background grid texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+[data-theme="light"] body::before {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+}
+
+/* Ambient glow */
+body::after {
+  content: '';
+  position: fixed;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70vw;
+  height: 50vh;
+  background: radial-gradient(ellipse, rgba(99,102,241,0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.5s;
+}
+
+/* ═══════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.1rem;
+  background: var(--nav-bg);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-left { display: flex; align-items: center; gap: 0.7rem; }
+.nav-right { display: flex; align-items: center; gap: 0.4rem; }
+
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+/* Menu Trigger */
+.menu-trigger {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast), transform 0.15s;
+  user-select: none;
+}
+.menu-trigger:hover { background: var(--surface2); border-color: var(--border2); }
+.menu-trigger:active { transform: scale(0.93); }
+
+/* Hamburger — three lines → X */
+.hamburger { width: 15px; height: 10px; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
+.hamburger div {
+  width: 100%; height: 1.5px;
+  background: var(--text);
+  border-radius: 10px;
+  transform-origin: center;
+  transition: transform 0.38s var(--ease-in-out), opacity 0.25s ease, width 0.3s ease;
+}
+.hamburger div:nth-child(2) { width: 65%; }
+.menu-trigger.open .hamburger div:nth-child(1) { transform: translateY(4.25px) rotate(45deg); width: 100%; }
+.menu-trigger.open .hamburger div:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.menu-trigger.open .hamburger div:nth-child(3) { transform: translateY(-4.25px) rotate(-45deg); }
+
+/* Icon Button */
+.icon-btn {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--text2);
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform 0.15s;
+}
+.icon-btn:hover { background: var(--surface2); border-color: var(--border2); color: var(--text); transform: scale(1.04); }
+.icon-btn:active { transform: scale(0.91); }
+.icon-btn svg { width: 16px; height: 16px; }
+
+/* ═══════════════════════════════════════
+   DRAWER
+═══════════════════════════════════════ */
+.drawer {
+  position: fixed; inset: 0; z-index: 999;
+  visibility: hidden; pointer-events: none;
+}
+.drawer.open { visibility: visible; pointer-events: all; }
+
+.drawer-overlay {
+  position: absolute; inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+}
+.drawer.open .drawer-overlay { opacity: 1; }
+
+.drawer-content {
+  position: absolute;
+  top: 0; left: 0;
+  width: 78%; max-width: 290px;
+  height: 100%;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 76px 1.1rem 2rem;
+  transform: translateX(-112%);
+  transition: transform 0.42s var(--ease-out);
+  display: flex; flex-direction: column; gap: 1.75rem;
+  overflow-y: auto;
+}
+.drawer.open .drawer-content { transform: translateX(0); }
+
+.drawer-label {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+  display: block;
+  font-weight: 700;
+}
+
+.drawer-links { list-style: none; display: flex; flex-direction: column; }
+.drawer-links li a {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.2s, padding-left 0.22s;
+}
+.drawer-links li a:hover,
+.drawer-links li a.active-link { color: var(--accent); padding-left: 5px; }
+.drawer-links li a svg { width: 13px; height: 13px; opacity: 0.35; transition: opacity 0.2s, transform 0.2s; }
+.drawer-links li a:hover svg { opacity: 1; transform: translateX(2px); }
+
+/* Action Grid */
+.action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.action-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.8rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex; flex-direction: column; gap: 7px;
+  transition: background var(--transition-fast), border-color var(--transition-fast), transform 0.18s var(--ease-spring);
+}
+.action-item:hover { background: var(--surface2); border-color: var(--border2); transform: translateY(-2px); }
+.action-item:active { transform: scale(0.96); }
+.action-item.wide { grid-column: span 2; flex-direction: row; align-items: center; gap: 10px; }
+.ai-icon { width: 18px; height: 18px; color: var(--accent); }
+.ai-label { font-size: 0.72rem; font-weight: 700; color: var(--text2); letter-spacing: 0.01em; }
+
+/* ═══════════════════════════════════════
+   PAGES
+═══════════════════════════════════════ */
+.page {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 74px 1.25rem 2rem;
+  opacity: 0;
+  transform: translateY(20px) scale(0.975);
+  pointer-events: none;
+  transition: opacity 0.48s var(--ease-out), transform 0.48s var(--ease-out);
+  will-change: opacity, transform;
+  z-index: 1;
+}
+.page.active { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+.page.exit {
+  opacity: 0; transform: translateY(-8px) scale(1.015);
+  transition: opacity 0.25s var(--ease-in-out), transform 0.25s var(--ease-in-out);
+}
+
+/* ── HOME PAGE ── */
+.hero {
+  text-align: center;
+  max-width: 500px;
+}
+
+.status-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(99,102,241,0.22);
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 1.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: statusPulse 2.5s ease-in-out infinite;
+}
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(99,102,241,0.5); }
+  50% { opacity: 0.7; transform: scale(1.2); box-shadow: 0 0 0 4px rgba(99,102,241,0); }
+}
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.4rem, 9vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  margin-bottom: 1rem;
+  background: linear-gradient(160deg, var(--text) 30%, var(--text2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero p {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  margin-bottom: 2rem;
+  max-width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+  padding: 11px 24px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+  transition: transform 0.22s var(--ease-spring), box-shadow 0.22s;
+  box-shadow: 0 4px 20px rgba(99,102,241,0.35), 0 0 0 0 rgba(99,102,241,0);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(99,102,241,0.45), 0 0 0 6px rgba(99,102,241,0.07);
+}
+.btn-primary:active { transform: scale(0.96); box-shadow: none; }
+.btn-primary svg { width: 15px; height: 15px; }
+
+.hero-footer {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.hero-copy {
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+}
+.version-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+/* ── MENU PAGE ── */
+.social-wrap {
+  width: 100%; max-width: 440px;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+
+.page-top-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.35rem; font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.page-close-btn {
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text2);
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform 0.22s;
+}
+.page-close-btn svg { width: 14px; height: 14px; }
+.page-close-btn:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: rotate(90deg) scale(1.06);
+}
+.page-close-btn:active { transform: rotate(90deg) scale(0.9); }
+
+/* Social Cards */
+.social-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius);
+  display: flex; align-items: center; gap: 0.9rem;
+  color: var(--text);
+  position: relative; overflow: hidden;
+  transition: background 0.2s, border-color 0.22s, transform 0.22s var(--ease-out), box-shadow 0.22s;
+  animation: slideIn 0.45s var(--ease-out) both;
+}
+.social-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(110deg, var(--accent-glow) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.social-card:hover {
+  background: var(--surface2);
+  border-color: var(--border3);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.social-card:hover::after { opacity: 1; }
+.social-card:active { transform: scale(0.98) translateY(0); box-shadow: none; }
+
+.social-card:nth-child(2)  { animation-delay: 0.04s; }
+.social-card:nth-child(3)  { animation-delay: 0.08s; }
+.social-card:nth-child(4)  { animation-delay: 0.12s; }
+.social-card:nth-child(5)  { animation-delay: 0.16s; }
+.social-card:nth-child(6)  { animation-delay: 0.20s; }
+.social-card:nth-child(7)  { animation-delay: 0.24s; }
+.social-card:nth-child(8)  { animation-delay: 0.28s; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.card-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 1;
+}
+.card-icon svg { width: 20px; height: 20px; }
+
+.card-body {
+  flex: 1; min-width: 0;
+  position: relative; z-index: 1;
+}
+.card-body strong {
+  font-size: 0.93rem; font-weight: 700;
+  display: block; letter-spacing: -0.01em;
+}
+.card-body small { font-size: 0.72rem; color: var(--muted); }
+
+.card-arrow {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  flex-shrink: 0;
+  position: relative; z-index: 1;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+}
+.social-card:hover .card-arrow {
+  background: var(--accent-soft);
+  border-color: rgba(99,102,241,0.4);
+  color: var(--accent);
+  transform: translateX(2px);
+}
+
+/* ── ABOUT PAGE ── */
+.about-card {
+  max-width: 420px; width: 100%; text-align: center;
+}
+.about-avatar-wrap {
+  margin: 0 auto 1.5rem;
+  width: 80px; height: 80px;
+  position: relative;
+}
+.about-avatar {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800;
+  color: white;
+  box-shadow: 0 8px 24px rgba(99,102,241,0.35);
+}
+.about-avatar-ring {
+  position: absolute; inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(99,102,241,0.3);
+  animation: avatarRing 3s ease-in-out infinite;
+}
+@keyframes avatarRing {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.06); opacity: 0.3; }
+}
+.about-card h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.55rem; font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.025em;
+}
+.about-card p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.75;
+  margin-top: 0.6rem;
+}
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+.about-stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+}
+.about-stat .stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem; font-weight: 800;
+  color: var(--accent);
+  display: block;
+}
+.about-stat .stat-lbl {
+  font-size: 0.65rem; font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+/* ── SEARCH PAGE ── */
+.search-wrap {
+  width: 100%; max-width: 480px;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+
+.search-box {
+  position: relative; display: flex; align-items: center;
+}
+.search-box input {
+  width: 100%;
+  padding: 12px 46px 12px 15px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.93rem;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.search-box input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.search-box input::placeholder { color: var(--muted); }
+
+.search-icon-inner {
+  position: absolute; right: 13px;
+  color: var(--muted);
+  pointer-events: none;
+  display: flex;
+}
+.search-icon-inner svg { width: 17px; height: 17px; }
+
+.search-clear-btn {
+  position: absolute; right: 12px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--muted);
+  display: none;
+  align-items: center; justify-content: center;
+  color: var(--bg2);
+  transition: background 0.2s, transform 0.15s;
+}
+.search-clear-btn:hover { background: var(--accent); transform: scale(1.1); }
+.search-clear-btn:active { transform: scale(0.92); }
+
+.search-tags {
+  display: flex; flex-wrap: wrap; gap: 0.45rem;
+}
+.search-tag {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text2);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.search-tag:hover { background: var(--accent-soft); border-color: rgba(99,102,241,0.3); color: var(--accent); }
+
+.search-results { display: flex; flex-direction: column; gap: 0.45rem; }
+.search-result-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex; align-items: center; gap: 12px;
+  transition: background 0.2s, border-color 0.2s, transform 0.18s;
+}
+.search-result-item:hover { background: var(--surface2); border-color: var(--border2); transform: translateX(3px); }
+.sr-icon {
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.sr-icon svg { width: 15px; height: 15px; }
+.sr-info strong { font-size: 0.86rem; font-weight: 700; display: block; }
+.sr-info small { font-size: 0.73rem; color: var(--muted); }
+
+/* ── SETTINGS PAGE ── */
+.settings-wrap {
+  width: 100%; max-width: 460px;
+  display: flex; flex-direction: column; gap: 1.25rem;
+  padding-bottom: 1rem;
+}
+.settings-section { display: flex; flex-direction: column; gap: 0.4rem; }
+.settings-section-label {
+  font-size: 0.58rem; text-transform: uppercase; letter-spacing: 2.5px;
+  color: var(--muted); font-weight: 700; padding: 0 0.2rem;
+}
+.settings-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.setting-row {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.setting-row:last-child { border-bottom: none; }
+.setting-row:hover { background: var(--surface2); }
+.setting-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.setting-icon svg { width: 15px; height: 15px; }
+.setting-info { flex: 1; }
+.setting-info strong { font-size: 0.85rem; font-weight: 700; display: block; }
+.setting-info small { font-size: 0.73rem; color: var(--muted); }
+
+/* Toggle Switch */
+.toggle { position: relative; width: 42px; height: 23px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute; inset: 0;
+  background: var(--border2);
+  border-radius: 100px; cursor: pointer;
+  transition: background 0.3s;
+}
+.toggle input:checked + .toggle-track { background: var(--accent); }
+.toggle-track::after {
+  content: '';
+  position: absolute; top: 2px; left: 2px;
+  width: 19px; height: 19px;
+  border-radius: 50%; background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: transform 0.3s var(--ease-out);
+}
+.toggle input:checked + .toggle-track::after { transform: translateX(19px); }
+
+/* Color Swatches */
+.color-swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+.swatch {
+  width: 24px; height: 24px; border-radius: 50%;
+  cursor: pointer; border: 2px solid transparent;
+  transition: transform 0.2s var(--ease-spring), border-color 0.2s, box-shadow 0.2s;
+}
+.swatch:hover { transform: scale(1.18); }
+.swatch.active { border-color: white; box-shadow: 0 0 0 2px var(--accent); }
+
+/* Theme Selector */
+.theme-selector { display: flex; gap: 0.45rem; }
+.theme-opt {
+  flex: 1; padding: 7px 10px;
+  border-radius: var(--radius-xs);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font-size: 0.75rem; font-weight: 700;
+  color: var(--text2);
+  cursor: pointer; text-align: center;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.theme-opt.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* ═══════════════════════════════════════
+   TOAST
+═══════════════════════════════════════ */
+.toast {
+  position: fixed; bottom: 2rem; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--text); color: var(--bg2);
+  padding: 9px 18px; border-radius: 100px;
+  font-size: 0.8rem; font-weight: 700;
+  transition: transform 0.4s var(--ease-out), opacity 0.4s;
+  opacity: 0; white-space: nowrap;
+  box-shadow: var(--shadow-lg);
+  z-index: 3000;
+  letter-spacing: 0.01em;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ── SCROLLABLE ── */
+.page-scroll {
+  overflow-y: auto;
+  max-height: calc(100vh - 74px);
+  width: 100%;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-bottom: 2rem;
+}
+
+/* Swipe zone */
+.swipe-zone { position: fixed; left: 0; top: 0; bottom: 0; width: 18px; z-index: 1001; pointer-events: none; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.75); }
+  to   { opacity: 1; transform: scale(1); }
+}
+</style>
+</head>
+<body>
+
+<div class="swipe-zone"></div>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav>
+  <div class="nav-left">
+    <div class="menu-trigger" id="menuBtn">
+      <div class="hamburger">
+        <div></div><div></div><div></div>
+      </div>
+    </div>
+    <div class="logo">Ozan</div>
+  </div>
+  <div class="nav-right">
+    <button class="icon-btn" title="Cari" onclick="showPage('search')">
+      <!-- Magnifying glass — Phosphor style -->
+      <svg viewBox="0 0 256 256" fill="currentColor">
+        <path d="M229.66,218.34l-50.07-50.07a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.31ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/>
+      </svg>
+    </button>
+    <button class="icon-btn" id="themeQuickBtn" title="Ubah Tema">
+      <!-- Moon icon -->
+      <svg id="themeNavIcon" viewBox="0 0 256 256" fill="currentColor">
+        <path id="themeNavPath" d="M235.54,150.21a104.84,104.84,0,0,1-37,52.91A104,104,0,0,1,32,120,103.09,103.09,0,0,1,52.88,57.48a104.84,104.84,0,0,1,52.91-37,8,8,0,0,1,10,10,88.08,88.08,0,0,0,109.8,109.8,8,8,0,0,1,10,10Z"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ DRAWER ═══ -->
+<div class="drawer" id="drawer">
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <div class="drawer-content">
+
+    <div>
+      <span class="drawer-label">Navigasi</span>
+      <ul class="drawer-links">
+        <li><a href="#" data-page="home" class="active-link">
+          Beranda
+          <!-- Chevron right -->
+          <svg viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+        </a></li>
+        <li><a href="#" data-page="menu">
+          Daftar Link
+          <svg viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+        </a></li>
+        <li><a href="#" data-page="about">
+          Tentang
+          <svg viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+        </a></li>
+      </ul>
+    </div>
+
+    <div>
+      <span class="drawer-label">Aksi Cepat</span>
+      <div class="action-grid">
+        <div class="action-item" onclick="showPage('search')">
+          <!-- Magnifying glass -->
+          <svg class="ai-icon" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.07a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.31ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg>
+          <span class="ai-label">Pencarian</span>
+        </div>
+        <div class="action-item" onclick="showPage('settings')">
+          <!-- Gear icon -->
+          <svg class="ai-icon" viewBox="0 0 256 256" fill="currentColor"><path d="M237.94,107.21a8,8,0,0,0-3.89-5.4l-29.83-17-.12-33.62a8,8,0,0,0-2.83-6.08,111.91,111.91,0,0,0-36.72-20.67,8,8,0,0,0-6.46.59L128,41.85,97.91,25a8,8,0,0,0-6.46-.59A111.91,111.91,0,0,0,54.73,45.1a8,8,0,0,0-2.83,6.08l-.12,33.62-29.83,17a8,8,0,0,0-3.89,5.4,106.47,106.47,0,0,0,0,41.56,8,8,0,0,0,3.89,5.4l29.83,17,.12,33.62a8,8,0,0,0,2.83,6.08,111.91,111.91,0,0,0,36.72,20.67,8,8,0,0,0,6.46-.59L128,214.15,158.09,231a7.91,7.91,0,0,0,3.84,1,8.09,8.09,0,0,0,2.62-.44,111.91,111.91,0,0,0,36.72-20.67,8,8,0,0,0,2.83-6.08l.12-33.62,29.83-17a8,8,0,0,0,3.89-5.4A106.47,106.47,0,0,0,237.94,107.21ZM128,168a40,40,0,1,1,40-40A40,40,0,0,1,128,168Z"/></svg>
+          <span class="ai-label">Pengaturan</span>
+        </div>
+        <div class="action-item wide" id="themeQuickBtn2">
+          <!-- Moon icon -->
+          <svg class="ai-icon" id="themeIcon" viewBox="0 0 256 256" fill="currentColor"><path id="themeIconPath" d="M235.54,150.21a104.84,104.84,0,0,1-37,52.91A104,104,0,0,1,32,120,103.09,103.09,0,0,1,52.88,57.48a104.84,104.84,0,0,1,52.91-37,8,8,0,0,1,10,10,88.08,88.08,0,0,0,109.8,109.8,8,8,0,0,1,10,10Z"/></svg>
+          <span class="ai-label" id="themeLabel">Ubah Tema</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ HOME PAGE ═══ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      Online
+    </div>
+    <h1>Semua Link<br>Di Sini.</h1>
+    <p>Akses seluruh platform sosial Ozan dari satu halaman yang elegan. Geser dari kiri untuk navigasi cepat.</p>
+    <button class="btn-primary" onclick="showPage('menu')">
+      Lihat Semua Link
+      <!-- Arrow right -->
+      <svg viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
+    </button>
+    <div class="hero-footer">
+      <span class="hero-copy">&copy; 2026 Ozan. Hak Cipta Dilindungi.</span>
+      <span class="version-badge">v2.0.2.1</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MENU PAGE ═══ -->
+<div class="page" id="page-menu" style="align-items:flex-start;padding-top:88px;overflow-y:auto;">
+  <div class="social-wrap">
+    <div class="page-top-bar">
+      <div class="page-title">Daftar Link</div>
+      <button class="page-close-btn" onclick="showPage('home')">
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>
+      </button>
+    </div>
+
+    <!-- Instagram -->
+    <a href="https://instagram.com/siozanf" target="_blank" class="social-card">
+      <div class="card-icon" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="0.5" fill="white"/>
+        </svg>
+      </div>
+      <div class="card-body"><strong>Instagram</strong><small>@siozanfz</small></div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 256 256" fill="currentColor" width="11" height="11"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
+      </div>
+    </a>
+
+    <!-- Twitter / X -->
+    <a href="https://x.com/siozanfz" target="_blank" class="social-card">
+      <div class="card-icon" style="background:#000">
+        <svg viewBox="0 0 24 24" fill="white" width="16" height="16">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </div>
+      <div class="card-body"><strong>Twitter / X</strong><small>@siozanfz</small></div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 256 256" fill="currentColor" width="11" height="11"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
+      </div>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://facebook.com/siozanfz" target="_blank" class="social-card">
+      <div class="card-icon" style="background:#1877f2">
+        <svg viewBox="0 0 24 24" fill="white" width="20" height="20">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+      </div>
+      <div class="card-body"><strong>Facebook</strong><small>@siozanfz</small></div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 256 256" fill="currentColor" width="11" height="11"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
+      </div>
+    </a>
+
+    <!-- YouTube -->
+    <a href="https://youtube.com" target="_blank" class="social-card">
+      <div class="card-icon" style="background:#ff0000">
+        <!-- YouTube Phosphor icon -->
+        <svg viewBox="0 0 256 256" fill="white" width="22" height="22">
+          <path d="M234.33,69.52a24,24,0,0,0-14.49-16.4C185.56,40,128,40,128,40S70.44,40,36.16,53.12A24,24,0,0,0,21.67,69.52,240.29,240.29,0,0,0,16,128,240.29,240.29,0,0,0,21.67,186.48,24,24,0,0,0,36.16,202.88C70.44,216,128,216,128,216s57.56,0,91.84-13.12a24,24,0,0,0,14.49-16.4A240.29,240.29,0,0,0,240,128,240.29,240.29,0,0,0,234.33,69.52Zm-72.32,58.72L108,160a8,8,0,0,1-4,1,8.09,8.09,0,0,1-4-1.08A8,8,0,0,1,96,153V103a8,8,0,0,1,11.94-6.94l54,28a8,8,0,0,1,.07,13.18Z"/>
+        </svg>
+      </div>
+      <div class="card-body"><strong>YouTube</strong><small>Tonton Konten</small></div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 256 256" fill="currentColor" width="11" height="11"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
+      </div>
+    </a>
+
+    <!-- GitHub -->
+    <a href="https://github.com/siozanfz" target="_blank" class="social-card">
+      <div class="card-icon" style="background:#24292e">
+        <!-- GitHub Phosphor -->
+        <svg viewBox="0 0 256 256" fill="white" width="20" height="20">
+          <path d="M208.31,75.68A59.78,59.78,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.06,0,0,0,216,112v-8A58.14,58.14,0,0,0,208.31,75.68Z"/>
+        </svg>
+      </div>
+      <div class="card-body"><strong>GitHub</strong><small>Proyek & Kode</small></div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 256 256" fill="currentColor" width="11" height="11"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
+      </div>
+    </a>
+
+    <!-- TikTok -->
+    <a href="https://tiktok.com/@siozanfz" target="_blank" class="social-card">
+      <div class="card-icon" style="background:#010101">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.77 0 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.05a8.19 8.19 0 0 0 4.79 1.54V7.15a4.85 4.85 0 0 1-1.02-.46z"/>
+        </svg>
+      </div>
+      <div class="card-body"><strong>TikTok</strong><small>@siozanfz</small></div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 256 256" fill="currentColor" width="11" height="11"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
+      </div>
+    </a>
+
+    <!-- Discord -->
+    <a href="https://discord.com" target="_blank" class="social-card">
+      <div class="card-icon" style="background:#5865f2">
+        <svg viewBox="0 0 256 256" fill="white" width="22" height="22">
+          <path d="M247.51,175.63C234,191.12,213.77,205.65,192.48,205.65a8,8,0,0,1-5.27-2L170,188.41a8,8,0,0,1-1-11.08,35.93,35.93,0,0,0,7.09-16.15,84.81,84.81,0,0,1-48,14.82,84.81,84.81,0,0,1-48-14.82,35.93,35.93,0,0,0,7.09,16.15,8,8,0,0,1-1,11.08L69,203.65a8,8,0,0,1-5.27,2C42.23,205.65,22,191.12,8.49,175.63c-16.29-18.36-18.19-115.38,35.46-137.21A71.57,71.57,0,0,1,75.43,32a8,8,0,0,1,7.54,5.31L88.18,52a103.27,103.27,0,0,1,79.64,0L173,37.31A8,8,0,0,1,180.57,32a71.57,71.57,0,0,1,31.48,6.42C265.7,60.25,263.8,157.27,247.51,175.63ZM104,120a16,16,0,1,0-16,16A16,16,0,0,0,104,120Zm80,0a16,16,0,1,0-16,16A16,16,0,0,0,184,120Z"/>
+        </svg>
+      </div>
+      <div class="card-body"><strong>Discord</strong><small>Komunitas & Chat</small></div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 256 256" fill="currentColor" width="11" height="11"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ ABOUT PAGE ═══ -->
+<div class="page" id="page-about">
+  <div class="about-card">
+    <div class="about-avatar-wrap">
+      <div class="about-avatar">O</div>
+      <div class="about-avatar-ring"></div>
+    </div>
+    <h2>Pro Social Links</h2>
+    <p>Platform tautan profesional dengan desain modern dan pengalaman pengguna terbaik. Dibangun dengan fokus pada kecepatan dan estetika.</p>
+    <div class="about-stats">
+      <div class="about-stat">
+        <span class="stat-num">7</span>
+        <span class="stat-lbl">Platform</span>
+      </div>
+      <div class="about-stat">
+        <span class="stat-num">100%</span>
+        <span class="stat-lbl">Gratis</span>
+      </div>
+      <div class="about-stat">
+        <span class="stat-num">v2</span>
+        <span class="stat-lbl">Versi</span>
+      </div>
+    </div>
+    <button class="btn-primary" style="margin-top:1.5rem;font-size:0.82rem;" onclick="showPage('home')">
+      Kembali ke Beranda
+    </button>
+  </div>
+</div>
+
+<!-- ═══ SEARCH PAGE ═══ -->
+<div class="page" id="page-search" style="align-items:flex-start;padding-top:88px;overflow-y:auto;">
+  <div class="search-wrap">
+    <div class="page-top-bar">
+      <div class="page-title">Pencarian</div>
+      <button class="page-close-btn" onclick="showPage('home')">
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>
+      </button>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Cari tautan, halaman…"
+             oninput="doSearch(this.value);updateClearBtn()" />
+      <button class="search-clear-btn" id="clearBtn" onclick="clearSearch()" style="display:none">
+        <svg viewBox="0 0 256 256" fill="currentColor" width="10" height="10"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>
+      </button>
+      <div class="search-icon-inner" id="searchIconInner">
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.07a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.31ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg>
+      </div>
+    </div>
+    <div class="search-tags">
+      <div class="search-tag" onclick="filterSearch('social')">Media Sosial</div>
+      <div class="search-tag" onclick="filterSearch('konten')">Konten</div>
+      <div class="search-tag" onclick="filterSearch('kode')">Kode</div>
+      <div class="search-tag" onclick="filterSearch('komunitas')">Komunitas</div>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- ═══ SETTINGS PAGE ═══ -->
+<div class="page" id="page-settings">
+  <div class="page-scroll">
+    <div class="settings-wrap">
+      <div class="page-top-bar">
+        <div class="page-title">Pengaturan</div>
+        <button class="page-close-btn" onclick="showPage('home')">
+          <svg viewBox="0 0 256 256" fill="currentColor"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>
+        </button>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-label">Tampilan</div>
+        <div class="settings-card">
+          <input type="checkbox" id="darkToggle" checked style="display:none" onchange="toggleTheme()">
+          <!-- Theme row -->
+          <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:0.7rem;">
+            <div style="display:flex;align-items:center;gap:0.9rem;width:100%">
+              <div class="setting-icon" style="background:rgba(245,158,11,0.12);color:#f59e0b">
+                <!-- Sun icon -->
+                <svg viewBox="0 0 256 256" fill="currentColor"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM40,120H16a8,8,0,0,0,0,16H40a8,8,0,0,0,0-16Zm200,0H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16ZM120,216v24a8,8,0,0,0,16,0V216a8,8,0,0,0-16,0Z"/></svg>
+              </div>
+              <div class="setting-info"><strong>Tema Warna</strong><small>Pilih tampilan antarmuka</small></div>
+            </div>
+            <div class="theme-selector" style="width:100%">
+              <button class="theme-opt active" onclick="setThemeMode('dark',this)">Gelap</button>
+              <button class="theme-opt" onclick="setThemeMode('light',this)">Terang</button>
+              <button class="theme-opt" onclick="setThemeMode('auto',this)">Otomatis</button>
+            </div>
+          </div>
+          <!-- Accent color row -->
+          <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:0.7rem;">
+            <div style="display:flex;align-items:center;gap:0.9rem;width:100%">
+              <div class="setting-icon" style="background:var(--accent-soft);color:var(--accent)">
+                <!-- Palette icon -->
+                <svg viewBox="0 0 256 256" fill="currentColor"><path d="M200.77,53.89A103.27,103.27,0,0,0,128,24h-1.07A104,104,0,0,0,24,128c0,43.15,26.86,79.22,65.73,94.79A32,32,0,0,0,136,192a16,16,0,0,1,16-16h46.4a32,32,0,0,0,31.72-28.25C234.32,117.37,224.5,79,200.77,53.89ZM72,128a12,12,0,1,1,12,12A12,12,0,0,1,72,128Zm44-44a12,12,0,1,1,12,12A12,12,0,0,1,116,84Zm56,0a12,12,0,1,1,12,12A12,12,0,0,1,172,84Zm-96,96a12,12,0,1,1,12-12A12,12,0,0,1,76,180Z"/></svg>
+              </div>
+              <div class="setting-info"><strong>Warna Aksen</strong><small>Kustomisasi warna tema</small></div>
+            </div>
+            <div class="color-swatches">
+              <div class="swatch active" style="background:#6366f1" onclick="setAccent('#6366f1','#8b5cf6',this)" title="Indigo"></div>
+              <div class="swatch" style="background:#06b6d4" onclick="setAccent('#06b6d4','#3b82f6',this)" title="Cyan"></div>
+              <div class="swatch" style="background:#10b981" onclick="setAccent('#10b981','#059669',this)" title="Hijau"></div>
+              <div class="swatch" style="background:#f59e0b" onclick="setAccent('#f59e0b','#f97316',this)" title="Amber"></div>
+              <div class="swatch" style="background:#ef4444" onclick="setAccent('#ef4444','#ec4899',this)" title="Merah"></div>
+              <div class="swatch" style="background:#ec4899" onclick="setAccent('#ec4899','#a855f7',this)" title="Pink"></div>
+              <div class="swatch" style="background:#a855f7" onclick="setAccent('#a855f7','#6366f1',this)" title="Ungu"></div>
+              <div class="swatch" style="background:#14b8a6" onclick="setAccent('#14b8a6','#06b6d4',this)" title="Teal"></div>
+              <div class="swatch" style="background:#f97316" onclick="setAccent('#f97316','#eab308',this)" title="Oranye"></div>
+              <div class="swatch" style="background:#0ea5e9" onclick="setAccent('#0ea5e9','#6366f1',this)" title="Biru"></div>
+              <div class="swatch" style="background:#84cc16" onclick="setAccent('#84cc16','#10b981',this)" title="Lime"></div>
+              <div class="swatch" style="background:#64748b" onclick="setAccent('#64748b','#475569',this)" title="Abu"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const state = { menuOpen: false, theme: 'dark', page: 'home' };
+
+/* ── MENU ── */
+function toggleMenu(force) {
+  state.menuOpen = force !== undefined ? force : !state.menuOpen;
+  $('drawer').classList.toggle('open', state.menuOpen);
+  $('menuBtn').classList.toggle('open', state.menuOpen);
+}
+$('menuBtn').onclick = () => toggleMenu();
+$('drawerOverlay').onclick = () => toggleMenu(false);
+
+/* ── PAGES ── */
+function showPage(id) {
+  const cur = $('page-' + state.page);
+  if (cur) { cur.classList.add('exit'); setTimeout(() => cur.classList.remove('exit'), 280); }
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const next = $('page-' + id);
+  if (next) { setTimeout(() => next.classList.add('active'), 55); }
+  state.page = id;
+  toggleMenu(false);
+  document.querySelectorAll('.drawer-links a').forEach(a => {
+    a.classList.toggle('active-link', a.dataset.page === id);
+  });
+  if (id === 'search') {
+    setTimeout(() => { const inp = $('searchInput'); if(inp) inp.focus(); }, 400);
+    renderSearch('');
+  }
+  if (id === 'settings') {
+    const dt = $('darkToggle');
+    if(dt) dt.checked = state.theme === 'dark';
+  }
+}
+
+document.querySelectorAll('.drawer-links a').forEach(a => {
+  a.onclick = e => { e.preventDefault(); showPage(a.dataset.page); };
+});
+
+/* ── SWIPE ── */
+let tsx = 0;
+window.addEventListener('touchstart', e => { tsx = e.changedTouches[0].screenX; });
+window.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].screenX - tsx;
+  if (dx > 80 && tsx < 45 && !state.menuOpen) toggleMenu(true);
+  if (dx < -80 && state.menuOpen) toggleMenu(false);
+});
+
+/* ── THEME ── */
+const MOON_PATH = "M235.54,150.21a104.84,104.84,0,0,1-37,52.91A104,104,0,0,1,32,120,103.09,103.09,0,0,1,52.88,57.48a104.84,104.84,0,0,1,52.91-37,8,8,0,0,1,10,10,88.08,88.08,0,0,0,109.8,109.8,8,8,0,0,1,10,10Z";
+const SUN_PATH = "M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM40,120H16a8,8,0,0,0,0,16H40a8,8,0,0,0,0-16Zm200,0H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16ZM120,216v24a8,8,0,0,0,16,0V216a8,8,0,0,0-16,0Z";
+
+function updateThemeUI() {
+  const isDark = state.theme === 'dark';
+  const path = isDark ? MOON_PATH : SUN_PATH;
+  $('themeIconPath').setAttribute('d', path);
+  $('themeNavPath').setAttribute('d', path);
+  if($('darkToggle')) $('darkToggle').checked = isDark;
+  if($('themeLabel')) $('themeLabel').textContent = isDark ? 'Mode Gelap' : 'Mode Terang';
+}
+
+function toggleTheme() {
+  state.theme = state.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = state.theme;
+  updateThemeUI();
+  showToast(state.theme === 'dark' ? 'Mode Gelap Aktif' : 'Mode Terang Aktif');
+}
+
+function setThemeMode(mode, btn) {
+  document.querySelectorAll('.theme-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const isDark = mode === 'dark' || (mode === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  state.theme = isDark ? 'dark' : 'light';
+  document.documentElement.dataset.theme = state.theme;
+  updateThemeUI();
+  showToast('Tema diperbarui');
+}
+
+$('themeQuickBtn').onclick = toggleTheme;
+$('themeQuickBtn2').onclick = toggleTheme;
+
+function setAccent(c1, c2, el) {
+  document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  document.documentElement.style.setProperty('--accent', c1);
+  document.documentElement.style.setProperty('--accent2', c2);
+  document.documentElement.style.setProperty('--accent-glow', c1 + '2e');
+  document.documentElement.style.setProperty('--accent-soft', c1 + '14');
+  showToast('Warna aksen diperbarui');
+}
+
+/* ── SEARCH ── */
+const SOCIAL_ICONS = {
+  'Instagram': `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="white"/></svg>`,
+  'Twitter / X': `<svg viewBox="0 0 24 24" fill="white" width="13" height="13"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+  'Facebook': `<svg viewBox="0 0 24 24" fill="white" width="15" height="15"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
+  'YouTube': `<svg viewBox="0 0 256 256" fill="white" width="16" height="16"><path d="M234.33,69.52a24,24,0,0,0-14.49-16.4C185.56,40,128,40,128,40S70.44,40,36.16,53.12A24,24,0,0,0,21.67,69.52,240.29,240.29,0,0,0,16,128,240.29,240.29,0,0,0,21.67,186.48,24,24,0,0,0,36.16,202.88C70.44,216,128,216,128,216s57.56,0,91.84-13.12a24,24,0,0,0,14.49-16.4A240.29,240.29,0,0,0,240,128,240.29,240.29,0,0,0,234.33,69.52Zm-72.32,58.72L108,160a8,8,0,0,1-4,1,8.09,8.09,0,0,1-4-1.08A8,8,0,0,1,96,153V103a8,8,0,0,1,11.94-6.94l54,28a8,8,0,0,1,.07,13.18Z"/></svg>`,
+  'GitHub': `<svg viewBox="0 0 256 256" fill="white" width="15" height="15"><path d="M208.31,75.68A59.78,59.78,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.06,0,0,0,216,112v-8A58.14,58.14,0,0,0,208.31,75.68Z"/></svg>`,
+  'TikTok': `<svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.77 0 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-6.13 6.33 6.34 6.34 0 0 0 12.67 0V9.05a8.19 8.19 0 0 0 4.79 1.54V7.15a4.85 4.85 0 0 1-1.02-.46z"/></svg>`,
+  'Discord': `<svg viewBox="0 0 256 256" fill="white" width="16" height="16"><path d="M247.51,175.63C234,191.12,213.77,205.65,192.48,205.65a8,8,0,0,1-5.27-2L170,188.41a8,8,0,0,1-1-11.08,35.93,35.93,0,0,0,7.09-16.15,84.81,84.81,0,0,1-48,14.82,84.81,84.81,0,0,1-48-14.82,35.93,35.93,0,0,0,7.09,16.15,8,8,0,0,1-1,11.08L69,203.65a8,8,0,0,1-5.27,2C42.23,205.65,22,191.12,8.49,175.63c-16.29-18.36-18.19-115.38,35.46-137.21A71.57,71.57,0,0,1,75.43,32a8,8,0,0,1,7.54,5.31L88.18,52a103.27,103.27,0,0,1,79.64,0L173,37.31A8,8,0,0,1,180.57,32a71.57,71.57,0,0,1,31.48,6.42C265.7,60.25,263.8,157.27,247.51,175.63ZM104,120a16,16,0,1,0-16,16A16,16,0,0,0,104,120Zm80,0a16,16,0,1,0-16,16A16,16,0,0,0,184,120Z"/></svg>`,
+};
+const SOCIAL_BG = {
+  'Instagram':'linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)',
+  'Twitter / X':'#000',
+  'Facebook':'#1877f2',
+  'YouTube':'#ff0000',
+  'GitHub':'#24292e',
+  'TikTok':'#010101',
+  'Discord':'#5865f2',
+};
+const ALL_ITEMS = [
+  { title:'Instagram', desc:'Media Sosial', tags:['social','media sosial'], page:'menu' },
+  { title:'Twitter / X', desc:'Media Sosial', tags:['social','media sosial'], page:'menu' },
+  { title:'Facebook', desc:'Media Sosial', tags:['social','media sosial'], page:'menu' },
+  { title:'YouTube', desc:'Platform Konten', tags:['konten','video'], page:'menu' },
+  { title:'GitHub', desc:'Repositori Kode', tags:['kode','developer'], page:'menu' },
+  { title:'TikTok', desc:'Konten Pendek', tags:['konten','video'], page:'menu' },
+  { title:'Discord', desc:'Komunitas & Chat', tags:['komunitas'], page:'menu' },
+  { title:'Beranda', desc:'Halaman utama', tags:[], page:'home' },
+  { title:'Tentang', desc:'Info aplikasi', tags:[], page:'about' },
+  { title:'Pengaturan', desc:'Konfigurasi', tags:[], page:'settings' },
+];
+
+function renderSearch(query) {
+  const q = query.toLowerCase().trim();
+  const filtered = q === '' ? ALL_ITEMS : ALL_ITEMS.filter(i =>
+    i.title.toLowerCase().includes(q) || i.desc.toLowerCase().includes(q) || i.tags.some(t => t.includes(q))
+  );
+  const res = $('searchResults');
+  if (!filtered.length) {
+    res.innerHTML = `<div style="text-align:center;color:var(--muted);padding:2rem;font-size:0.86rem;">Tidak ada hasil untuk "<strong>${query}</strong>"</div>`;
+    return;
+  }
+  res.innerHTML = filtered.map(item => {
+    const svgIcon = SOCIAL_ICONS[item.title];
+    const bg = SOCIAL_BG[item.title] || 'var(--accent-soft)';
+    const iconHtml = svgIcon
+      ? `<div class="sr-icon" style="background:${bg}">${svgIcon}</div>`
+      : `<div class="sr-icon"><svg viewBox="0 0 256 256" fill="currentColor" width="14" height="14"><path d="M229.66,218.34l-50.07-50.07a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.31ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg></div>`;
+    return `<div class="search-result-item" onclick="showPage('${item.page}')">
+      ${iconHtml}
+      <div class="sr-info"><strong>${item.title}</strong><small>${item.desc}</small></div>
+    </div>`;
+  }).join('');
+}
+
+function doSearch(v) { renderSearch(v); }
+function filterSearch(tag) {
+  $('searchInput').value = tag;
+  renderSearch(tag);
+  updateClearBtn();
+}
+function updateClearBtn() {
+  const val = $('searchInput').value;
+  const cb = $('clearBtn');
+  const si = $('searchIconInner');
+  if(cb) { cb.style.display = val ? 'flex' : 'none'; }
+  if(si) { si.style.display = val ? 'none' : 'flex'; }
+}
+function clearSearch() {
+  const inp = $('searchInput');
+  inp.value = '';
+  renderSearch('');
+  updateClearBtn();
+  inp.focus();
+}
+
+/* ── TOAST ── */
+let toastTimer;
+function showToast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+</script>
+</body>
+</html>
